@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-01T05:37:03.768Z",
+  "tests": [
+    {
+      "name": "模型目录",
+      "passed": true,
+      "ms": 15,
+      "models": [
+        "codex-local",
+        "gpt-6.1-sol",
+        "gpt-6-astra",
+        "gpt-6-sol",
+        "gpt-6-luna",
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
+        "gpt-5.5"
+      ]
+    },
+    {
+      "name": "真实非流式文本",
+      "passed": true,
+      "ms": 7694,
+      "answer": "LOCAL_API_OK",
+      "usage": {
+        "prompt_tokens": 6435,
+        "completion_tokens": 7,
+        "total_tokens": 6442,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      }
+    },
+    {
+      "name": "真实 SSE 流式文本",
+      "passed": true,
+      "ms": 9133,
+      "answer": "STREAM_OK",
+      "chunks": 5
+    },
+    {
+      "name": "真实函数工具调用",
+      "passed": true,
+      "ms": 11230,
+      "tool": "lookup_supplier",
+      "arguments": "{\"id\":\"supplier-1\"}"
+    },
+    {
+      "name": "真实工具结果续接",
+      "passed": true,
+      "ms": 7044,
+      "answer": "supplier-1 的风险等级为低（low）。"
+    },
+    {
+      "name": "真实图片输入",
+      "passed": true,
+      "ms": 8581,
+      "answer": "RED"
+    },
+    {
+      "name": "真实 SSE 工具调用",
+      "passed": true,
+      "ms": 9367,
+      "tool": "probe_echo"
+    },
+    {
+      "name": "真实 JSON Schema 回复",
+      "passed": true,
+      "ms": 13266,
+      "answer": "{\"answer\":\"SCHEMA_OK\"}"
+    }
+  ]
+}
