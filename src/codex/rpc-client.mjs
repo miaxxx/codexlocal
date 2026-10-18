@@ -72,9 +72,21 @@ export class RpcClient extends EventEmitter {
       capabilities: { experimentalApi: true },
     });
     this.send({ method: 'initialized' });
-    const account = await this.request('account/read', { refreshToken: false });
+    const account = await this.readAccount();
     if (account.account?.type !== 'chatgpt') {
       throw new ApiError(503, '需要 Codex 的 ChatGPT 登录状态。请使用此 CLI 执行 login；此服务拒绝 API Key 计费模式。', 'chatgpt_login_required');
+    }
+  }
+
+  async readAccount() {
+    // This read sometimes fails while Codex discovers the workspace route. No
+    // inference has started yet, so retry only this specific transient failure.
+    for (let attempt = 0; ; attempt++) {
+      try { return await this.request('account/read', { refreshToken: false }); }
+      catch (error) {
+        if (this.closed || attempt >= 2 || error.code !== 'codex_rpc_error'
+          || error.message !== 'workspace routing discovery timed out') throw error;
+      }
     }
   }
 
